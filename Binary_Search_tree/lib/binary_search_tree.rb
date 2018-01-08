@@ -28,7 +28,6 @@ class BinarySearchTree
     else 
       return self.find(value, tree_node.right) 
     end 
-    # return nil 
   end
 
   def delete(value)
@@ -70,10 +69,34 @@ class BinarySearchTree
           parent_node.left = del_node.left 
         end 
       end 
+    end
+    
+    # 2 children 
+    if del_node.child_count == 2 
+      # debugger
+      max_node = maximum(del_node.left)
+      replace(del_node, max_node)
+
+    end 
+  end
+  
+  def replace(old_node, new_node)
+    # promotes it's child to it's place 
+    if new_node.left 
+      replace(new_node, new_node.left)
     end 
 
-  end
- 
+    if old_node.parent.left == old_node 
+      old_node.parent.left = new_node 
+    elsif old_node.parent.right == old_node
+      old_node.parent.right = new_node 
+    end 
+
+    new_node.left = old_node.left 
+    new_node.right = old_node.right 
+    old_node.parent = new_node.parent 
+    
+  end 
 
   # helper method for #delete:
   def maximum(tree_node = @root)
@@ -84,8 +107,15 @@ class BinarySearchTree
     end 
   end
 
+  def minimum(tree_node = @root)
+    if tree_node.left 
+      self.minimum(tree_node.left)
+    else
+      return tree_node 
+    end 
+  end
+
   def depth(tree_node = @root)
-    debugger 
     if tree_node.nil? 
       return 0 
     end 
@@ -94,31 +124,49 @@ class BinarySearchTree
       return 0
     end 
 
-    if tree_node.right 
-      right = 1 + depth(tree_node.right)   
-    end 
+    right = 1 + depth(tree_node.right)   
+    left = 1 + depth(tree_node.left) 
 
-    if tree_node.left
-      left = 1 + depth(tree_node.left) 
-    end 
-
-    if left.nil? 
+    if left > right 
+      return left  
+    else 
       return right 
-    elsif right.nil? 
-      return left 
     end 
-
-    
-
 
   end 
 
   def is_balanced?(tree_node = @root)
+    return true unless tree_node 
+    
+    if tree_node.left
+      left = depth(tree_node.left) 
+    else 
+      left = 0 
+    end 
+
+    if tree_node.right
+      right = depth(tree_node.right) 
+    else 
+      right = 0 
+    end 
+    
+    if ((left - right).abs) <= 1 && is_balanced?(tree_node.left) && is_balanced?(tree_node.right) 
+      return true 
+    else 
+      return false 
+    end 
+
   end
 
   def in_order_traversal(tree_node = @root, arr = [])
+    return arr if tree_node.nil? 
+
+    in_order_traversal(tree_node.left, arr) 
+    arr << tree_node.value 
+    in_order_traversal(tree_node.right, arr) 
   end
 
+  
 
   private
   # optional helper methods go here:
