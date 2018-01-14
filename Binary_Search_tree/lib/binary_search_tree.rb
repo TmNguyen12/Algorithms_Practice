@@ -24,9 +24,9 @@ class BinarySearchTree
     if value == tree_node.value 
       return tree_node
     elsif value <= tree_node.value 
-      return self.find(value, tree_node.left) 
+      self.find(value, tree_node.left) 
     else 
-      return self.find(value, tree_node.right) 
+      self.find(value, tree_node.right) 
     end 
   end
 
