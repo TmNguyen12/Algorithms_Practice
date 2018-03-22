@@ -4,7 +4,7 @@ class Vertex
    @value = value
    @in_edges = [] 
    @out_edges = [] 
-  end
+  end 
 end
 
 class Edge
@@ -14,6 +14,7 @@ class Edge
     @to_vertex = to_vertex 
     @cost = cost 
 
+    # automatically add itself to the in_edges and out_edges of the vertex 
     @to_vertex.in_edges << self 
     @from_vertex.out_edges << self 
   end
@@ -25,3 +26,4 @@ class Edge
     @to_vertex = nil 
   end
 end
+
