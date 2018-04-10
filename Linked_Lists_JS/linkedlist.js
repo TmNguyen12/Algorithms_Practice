@@ -19,6 +19,7 @@ class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
+    this._length = 0; 
   }
 
   // insertion is O(1)
