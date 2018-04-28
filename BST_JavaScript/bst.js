@@ -145,6 +145,36 @@ class BinarySearchTree {
     }
   }
 
+  inOrderIterative() {
+    // 1. Create an empty stack
+    // 2. Current node = root node
+    // 3. Push current node to stack and set current = current.left until current is Null
+    // 4. If current is NULL and stack is not empty
+    //    a. Pop the top item from stack and print it
+    //    b. current = poppedItem.right
+    //    c. go back to 3
+    // 5. If current === NULL && stack is empty, exit
+
+    const stack = [];
+    let currentNode = this.root;
+    let done = false;
+
+    while (!done) {
+      if (currentNode !== null) {
+        stack.push(currentNode);
+        currentNode = currentNode.left;
+      } else {
+        if (stack.length > 0) {
+          let ejectedNode = stack.pop();
+          console.log(ejectedNode.data);
+          currentNode = ejectedNode.right;
+        } else {
+          done = true;
+        }
+      }
+    }
+  }
+
   getRootNode() {
     return this.root;
   }
@@ -189,7 +219,10 @@ let root = BST.getRootNode();
 // BST.inorder(root);
 BST.remove(7);
 let root2 = BST.getRootNode();
-// BST.inorder(root2);
+console.log('inorder Recursive');
+BST.inorder(root2);
+console.log('inorder Iterative');
+BST.inOrderIterative();
 // console.log('postorder traversal');
 // BST.postorder(root2);
 // console.log('preorder traversal');
@@ -199,8 +232,8 @@ let root2 = BST.getRootNode();
 
 // console.log(BST.findMinNode());
 // console.log(BST.getRootNode());
-BST.levelOrder();
-let a = BST.search(BST.root, 24);
-console.log(a);
+// BST.levelOrder();
+// let a = BST.search(BST.root, 24);
+// console.log(a);
 
 printNode(BST.root, 'bst.dot');
