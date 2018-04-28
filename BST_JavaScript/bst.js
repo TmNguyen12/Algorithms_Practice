@@ -1,3 +1,10 @@
+// On average Access, Search, Insertion, Deletion => O(log n)
+// Worst case it's O(n)
+
+// Used for hierarchical data (i.e filesystem)
+
+const printNode = require('../print_node');
+
 class Node {
   constructor(data) {
     this.data = data;
@@ -50,7 +57,7 @@ class BinarySearchTree {
       node.left = this.removeNode(node.left, key);
       return node;
     } else if (key > node.data) {
-      node.rigth = this.removeNode(node.right, key);
+      node.right = this.removeNode(node.right, key);
       return node;
     } else {
       if (node.left === null && node.right === null) {
@@ -76,7 +83,7 @@ class BinarySearchTree {
     }
   }
 
-  findMinNode(node) {
+  findMinNode(node = this.root) {
     if (node.left === null) {
       return node;
     } else {
@@ -158,7 +165,20 @@ BST.insert(7);
 BST.insert(20);
 
 let root = BST.getRootNode();
-BST.inorder(root);
+// BST.inorder(root);
 BST.remove(7);
 let root2 = BST.getRootNode();
-BST.inorder(root2);
+// BST.inorder(root2);
+// console.log('postorder traversal');
+// BST.postorder(root2);
+// console.log('preorder traversal');
+// BST.preorder(root2);
+var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+
+// console.log(BST.findMinNode());
+// console.log(BST.getRootNode());
+displayTree(BST);
+let a = BST.search(BST.root, 22);
+console.log(a);
+
+printNode(BST.root, 'bst.dot');
