@@ -124,19 +124,40 @@ class BinarySearchTree {
     }
   }
 
+  // Breadth First Search
+  levelOrder() {
+    // 1. Create an empty queue
+    // 2. temp_node starts at root
+    // 3. Loop while temp node is not null
+    //    A. Print temp_node.data
+    //    B. Enqueue tempNode's children (leftnode then right node)
+    //    C. Dequeue a node from q and assign it's value to tempNode
+
+    const queue = [];
+    let tempNode = this.root;
+
+    while (tempNode) {
+      console.log(tempNode.data);
+      if (tempNode.left) queue.push(tempNode.left);
+      if (tempNode.right) queue.push(tempNode.right);
+      tempNode = queue.shift();
+      if (tempNode === null) break;
+    }
+  }
+
   getRootNode() {
     return this.root;
   }
 
   search(node, data) {
     if (node === null) {
-      return null;
+      return false;
     } else if (data < node.data) {
       return this.search(node.left, data);
     } else if (data > node.data) {
       return this.search(node.right, data);
     } else {
-      return node;
+      return true;
     }
   }
 }
@@ -173,12 +194,13 @@ let root2 = BST.getRootNode();
 // BST.postorder(root2);
 // console.log('preorder traversal');
 // BST.preorder(root2);
-var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+// var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+// displayTree(BST);
 
 // console.log(BST.findMinNode());
 // console.log(BST.getRootNode());
-displayTree(BST);
-let a = BST.search(BST.root, 22);
+BST.levelOrder();
+let a = BST.search(BST.root, 24);
 console.log(a);
 
 printNode(BST.root, 'bst.dot');
