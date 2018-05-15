@@ -154,7 +154,7 @@ class BinarySearchTree {
     //    b. current = poppedItem.right
     //    c. go back to 3
     // 5. If current === NULL && stack is empty, exit
-
+    if (this.root === null) return;
     const stack = [];
     let currentNode = this.root;
     let done = false;
@@ -173,6 +173,7 @@ class BinarySearchTree {
         }
       }
     }
+    return;
   }
 
   getRootNode() {
@@ -189,6 +190,36 @@ class BinarySearchTree {
     } else {
       return true;
     }
+  }
+
+  largestUniquePath(node) {
+    if (!node) return 0;
+
+    let hash = {};
+    return this.largestUniquePathUtil(node, hash);
+  }
+
+  largestUniquePathUtil(node, hashmap) {
+    if (!node) return Object.keys(hashmap).length;
+
+    if (!hashmap[node.data]) {
+      hashmap[node.data] = 0;
+    }
+    hashmap[node.data] += 1;
+    console.log('node', node.data);
+    console.log('hashmap', hashmap[node.data]);
+
+    let left = this.largestUniquePathUtil(node.left, hashmap);
+    let right = this.largestUniquePathUtil(node.right, hashmap);
+
+    let maxPath = Math.max(left, right);
+    console.log('maxPath', maxPath);
+
+    hashmap[node.data] -= 1;
+    console.log('hashmap', hashmap);
+    if (hashmap[node.data] === 0) delete hashmap[node.data];
+
+    return maxPath;
   }
 }
 
@@ -221,8 +252,11 @@ BST.remove(7);
 let root2 = BST.getRootNode();
 console.log('inorder Recursive');
 BST.inorder(root2);
-console.log('inorder Iterative');
-BST.inOrderIterative();
+console.log('iterative inorder traversal');
+BST.inOrderIterative(root2);
+console.log('largest path', BST.largestUniquePath(root2));
+// console.log('inorder Iterative');
+// BST.inOrderIterative();
 // console.log('postorder traversal');
 // BST.postorder(root2);
 // console.log('preorder traversal');
