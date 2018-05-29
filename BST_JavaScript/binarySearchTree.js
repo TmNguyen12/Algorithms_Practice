@@ -192,6 +192,24 @@ class BinarySearchTree {
     }
   }
 
+  // Traverse the tree. First value that is inbetween n1 and n2 or equal to one 
+  // of them is going to be our LCA 
+  lowestCommonAncestor(node, n1, n2){
+    // this doesn't assume n1 < n2 and accounts for the possibility of n2 < n1
+    let lowest = n1 < n2 ? n1 : n2; 
+    let highest = n1 > n2 ? n1 : n2; 
+
+    if (node === null) return null; 
+
+    if (node.data > highest) 
+      return this.lowestCommonAncestor(node.left, n1, n2);
+      
+    if (node.data < lowest) 
+      return this.lowestCommonAncestor(node.right, n1, n2);
+    
+    return node; 
+  }
+
  
 }
 
@@ -218,29 +236,29 @@ BST.insert(5);
 BST.insert(7);
 BST.insert(20);
 
-let root = BST.getRootNode();
-// BST.inorder(root);
-BST.remove(7);
-let root2 = BST.getRootNode();
-console.log('inorder Recursive');
-BST.inorder(root2);
-console.log('iterative inorder traversal');
-BST.inOrderIterative(root2);
-console.log('largest path', BST.largestUniquePath(root2));
-console.log(BST);
+// let root = BST.getRootNode();
+// // BST.inorder(root);
+// BST.remove(7);
+// let root2 = BST.getRootNode();
+// console.log('inorder Recursive');
+// BST.inorder(root2);
+// console.log('iterative inorder traversal');
+// BST.inOrderIterative(root2);
+// console.log(BST);
 // console.log('inorder Iterative');
 // BST.inOrderIterative();
 // console.log('postorder traversal');
 // BST.postorder(root2);
 // console.log('preorder traversal');
 // BST.preorder(root2);
-var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
-displayTree(BST);
+// var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+// displayTree(BST);
 
 // console.log(BST.findMinNode());
 // console.log(BST.getRootNode());
 // BST.levelOrder();
 // let a = BST.search(BST.root, 24);
 // console.log(a);
-
-printNode(BST.root, 'bst.dot');
+let lca = BST.lowestCommonAncestor(BST.root, 5, 3); 
+console.log('LCA', lca); 
+printNode(BST.root, 'bst5-28.dot');

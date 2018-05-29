@@ -274,7 +274,8 @@ const main = () => {
   Tree.root.right.left = new Node(4); 
   // Tree.bottomView();
   Tree.inorder(Tree.root);
-  Tree.removeShortPathNodes(Tree.root, 2);
+  Tree.removeShortPathNodes(Tree.root, 4);
+  console.log('--------------------------')
   Tree.inorder(Tree.root);
 }; 
 
