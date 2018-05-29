@@ -141,7 +141,7 @@ class BinarySearchTree {
       if (tempNode.left) queue.push(tempNode.left);
       if (tempNode.right) queue.push(tempNode.right);
       tempNode = queue.shift();
-      if (tempNode === null) break;
+      // if (tempNode === null) break;
     }
   }
 
@@ -256,9 +256,9 @@ BST.insert(20);
 
 // console.log(BST.findMinNode());
 // console.log(BST.getRootNode());
-// BST.levelOrder();
+BST.levelOrder();
 // let a = BST.search(BST.root, 24);
 // console.log(a);
-let lca = BST.lowestCommonAncestor(BST.root, 5, 3); 
-console.log('LCA', lca); 
-printNode(BST.root, 'bst5-28.dot');
+// let lca = BST.lowestCommonAncestor(BST.root, 5, 3); 
+// console.log('LCA', lca); 
+// printNode(BST.root, 'bst5-28.dot');

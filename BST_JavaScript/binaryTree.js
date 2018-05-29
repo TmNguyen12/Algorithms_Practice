@@ -1,5 +1,25 @@
 const printNode = require('../print_node');
 
+// On average Access, Search, Insertion, Deletion => O(log n)
+
+// Binary Trees 
+// Used for hierarchical data (i.e filesystem)
+// moderate access/search (quicker than Linked-Lists, slower than arrays)
+// moderate insertion/deletion (quicker than Arrays, slower than Unordered Linked Lists)
+// no upper limit on nodes
+
+// Uses
+// - manipulate heirarchical data (filesystems)
+// - Make information easy to search (BST)
+// - Manipulate sorted lists of data
+// - Router algorithms
+// - Form of a multi-stage decision-making (see business chess) 
+
+// Random facts 
+// - max nodes at binary tree at level i is 2^(i - 1)
+//  root is at level 1
+// - 
+
 class Node {
   constructor(data) {
     this.data = data;
@@ -14,17 +34,13 @@ class BinaryTree {
     this.root = null; 
   }
 
-  isLeaf(node){
-    if (node.left === null && node.right === null) return true; 
-  }
-
   // 
   minDepth(node){
     // edge case, shouldn't be hit unless the root is null; 
     if (this.root === null) return 0; 
 
     // base case
-    if (this.isLeaf(node)) return 1; 
+    if (node.left === null && node.right === null) return 1; 
 
 
     if (node.left === null) {
@@ -101,7 +117,7 @@ class BinaryTree {
     return false; 
   }
 
-  // Binary Trees are balanced when the height of the left adn right subtree is a difference of 1
+  // Binary Trees are balanced when the height of the left and right subtree is a difference of 1
   // This includes all subtrees
   isBalanced(node){
     if (node === null) return true; 
@@ -169,7 +185,7 @@ class BinaryTree {
 
     // Traverse the tree in postorder fashion so that if a leaf node path length
     // is shorter than k, then that node and all of its descendants till the node
-    // which are not on som eothe rpath are removed
+    // which are not on some other path are removed
     node.left = this.removeShortPathNodes(node.left, k, level + 1); 
     node.right = this.removeShortPathNodes(node.right, k, level + 1); 
 
