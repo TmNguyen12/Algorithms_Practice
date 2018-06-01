@@ -210,6 +210,36 @@ class BinarySearchTree {
     return node; 
   }
 
+
+  // Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+  // You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+  // use in order traversal 
+  kthSmallest(root, k) {
+    const stack = []; 
+    const counter = []; 
+    let current = root;
+    let done = false; 
+    
+
+    while (!done) {
+      if (current !== null){
+        stack.push(current); 
+        current = current.left; 
+      } else {
+        if (stack.length > 0){
+          let tempNode = stack.pop(); 
+          counter.push(tempNode.data); 
+          current = tempNode.right; 
+
+          if (counter.length === k) {
+            return counter.slice(-1)[0]; 
+          }
+        } else {
+          done = true; 
+        }
+      }
+    }
+  }; 
  
 }
 
@@ -236,6 +266,9 @@ BST.insert(5);
 BST.insert(7);
 BST.insert(20);
 
+let a = BST.kthSmallest(BST.root, 3); 
+console.log('kthSmallest', a); 
+
 // let root = BST.getRootNode();
 // // BST.inorder(root);
 // BST.remove(7);
@@ -256,9 +289,11 @@ BST.insert(20);
 
 // console.log(BST.findMinNode());
 // console.log(BST.getRootNode());
-BST.levelOrder();
+// BST.levelOrder();
 // let a = BST.search(BST.root, 24);
 // console.log(a);
 // let lca = BST.lowestCommonAncestor(BST.root, 5, 3); 
 // console.log('LCA', lca); 
-// printNode(BST.root, 'bst5-28.dot');
+// printNode(BST.root, 'bst5-31.dot');
+
+

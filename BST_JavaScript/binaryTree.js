@@ -131,6 +131,30 @@ class BinaryTree {
     return false; 
   }
 
+  // level order but each level is in it's own array 
+  levelOrderByLevel(root){
+    if (!root) return []; 
+    const queue = []; 
+    const results = []; 
+    queue.push(root); 
+    
+    while (queue.length > 0){
+        let level = []; 
+        let size = queue.length 
+        
+        for (let i = 0; i < size; i++) {
+            let currentNode = queue.shift(); 
+        
+            if (currentNode.left) queue.push(currentNode.left); 
+            if (currentNode.right) queue.push(currentNode.right); 
+        
+            level.push(currentNode.data); 
+        }
+        results.push(level)
+    }
+    
+    return results; 
+  }
 
   // Bottom View of Tree 
   // adding an hd (horizontal distance) value to the node class 
@@ -210,6 +234,7 @@ class BinaryTree {
     }
   }
 
+  // Root to leaf with largest uniq distinct nodes 
   largestUniquePath(node) {
     if (!node) return 0;
   
@@ -218,24 +243,20 @@ class BinaryTree {
   }
   
   largestUniquePathUtil(node, hashmap) {
+    // the number of keys would be the number of uniq nodes
     if (!node) return Object.keys(hashmap).length;
-  
+    
+
     if (!hashmap[node.data]) {
       hashmap[node.data] = 0;
     }
     hashmap[node.data] += 1;
-    console.log('node', node.data);
-    console.log('hashmap', hashmap[node.data]);
   
     let left = this.largestUniquePathUtil(node.left, hashmap);
-    console.log('left', left);
     let right = this.largestUniquePathUtil(node.right, hashmap);
-    console.log('right', right);
     let maxPath = Math.max(left, right);
-    console.log('maxPath', maxPath);
   
     hashmap[node.data] -= 1;
-    console.log('hashmap', hashmap);
     if (hashmap[node.data] === 0) delete hashmap[node.data];
   
     return maxPath;
@@ -272,7 +293,7 @@ class BinaryTree {
 //   let a = Tree.maxPathSum(Tree.root); 
 //   console.log('is Full Tree', Tree.isFullTree(Tree.root)); 
 //   console.log('maxpathsum',a); 
-//   printNode(Tree.root, 'BT_MaxPathSum.dot'); 
+  // printNode(Tree.root, 'BT_MaxPathSum.dot'); 
 //   console.log('is balanced', Tree.isBalanced(Tree.root));   
 // }; 
 
@@ -290,9 +311,13 @@ const main = () => {
   Tree.root.right.left = new Node(4); 
   // Tree.bottomView();
   Tree.inorder(Tree.root);
-  Tree.removeShortPathNodes(Tree.root, 4);
-  console.log('--------------------------')
-  Tree.inorder(Tree.root);
+  // Tree.removeShortPathNodes(Tree.root, 4);
+  // console.log('--------------------------')
+  // Tree.inorder(Tree.root);
+  console.log('largest Uniq Path', Tree.largestUniquePath(Tree.root)); 
+  printNode(Tree.root, 'largestUniqPath.dot'); 
+  console.log('level order by leve', Tree.levelOrderByLevel(Tree.root)); 
+  
 }; 
 
 main();
